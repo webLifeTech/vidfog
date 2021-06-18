@@ -6,12 +6,23 @@ import { IonicModule, IonicRouteStrategy } from '@ionic/angular';
 
 import { AppRoutingModule } from './app-routing.module';
 import { AppComponent } from './app.component';
+import { AppVersion } from '@ionic-native/app-version/ngx';
+import { Camera } from '@ionic-native/camera/ngx';
+import { Market } from '@ionic-native/market/ngx';
+import { SocialSharing } from '@ionic-native/social-sharing/ngx';
+
+
 
 @NgModule({
   declarations: [AppComponent],
   entryComponents: [],
   imports: [BrowserModule, IonicModule.forRoot(), AppRoutingModule],
-  providers: [{ provide: RouteReuseStrategy, useClass: IonicRouteStrategy }],
+  providers: [
+    AppVersion,
+    Camera,
+    Market,
+    SocialSharing,
+    { provide: RouteReuseStrategy, useClass: IonicRouteStrategy }],
   bootstrap: [AppComponent],
 })
 export class AppModule {}
