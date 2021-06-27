@@ -1,0 +1,31 @@
+<ion-header class="ion-no-border">
+  <ion-toolbar color="primary">
+    <ion-buttons slot="start">
+      <ion-menu-button></ion-menu-button>
+    </ion-buttons>
+    <ion-title>Trending</ion-title>
+    <ion-buttons slot="end">
+      <ion-button (click)="onClick()">
+        <ion-icon slot="icon-only" color="secondary" name="globe-outline"></ion-icon>
+      </ion-button>
+      <ion-button (click)="onClick()">
+        <ion-icon slot="icon-only" color="danger" name="heart"></ion-icon>
+      </ion-button>
+      <ion-button (click)="onClick()">
+        <ion-icon slot="icon-only" color="light" name="arrow-down-circle-outline"></ion-icon>
+      </ion-button>
+    </ion-buttons>
+  </ion-toolbar>
+</ion-header>
+
+<ion-content color="primary">
+  <ion-grid fixed>
+    <ion-row>
+      <ion-col size="6" *ngFor="let item of videoPosters">
+        <ion-card class="ion-no-margin" style="border: 1px solid white;border-radius: 10px">
+          <ion-img [src]="item" alt=""></ion-img>
+        </ion-card>
+      </ion-col>
+    </ion-row>
+  </ion-grid>
+</ion-content>
