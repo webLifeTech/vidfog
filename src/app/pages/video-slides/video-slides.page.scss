@@ -8,6 +8,7 @@ ion-slide {
 video {
     background: #000;
     height: 100vh;
+    object-fit: cover;
 }
 
 video::-webkit-media-controls-fullscreen-button {

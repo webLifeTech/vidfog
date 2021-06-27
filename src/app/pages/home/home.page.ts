@@ -8,16 +8,16 @@ import { GlobalService } from 'src/app/services/global.service';
   styleUrls: ['./home.page.scss'],
 })
 export class HomePage implements OnInit {
-  videoPosters = [
-    "https://www.kahanihindi.com/wp-content/uploads/2020/10/bedardi-se-pyar-ka-sahara-na-mila-status.jpg",
-    "https://www.kahanihindi.com/wp-content/uploads/2020/10/bedardi-se-pyar-ka-sahara-na-mila-status.jpg",
-    "https://www.kahanihindi.com/wp-content/uploads/2020/10/bedardi-se-pyar-ka-sahara-na-mila-status.jpg",
-    "https://www.kahanihindi.com/wp-content/uploads/2020/10/bedardi-se-pyar-ka-sahara-na-mila-status.jpg",
-    "https://www.kahanihindi.com/wp-content/uploads/2020/10/bedardi-se-pyar-ka-sahara-na-mila-status.jpg",
-    "https://www.kahanihindi.com/wp-content/uploads/2020/10/bedardi-se-pyar-ka-sahara-na-mila-status.jpg",
-    "https://www.kahanihindi.com/wp-content/uploads/2020/10/bedardi-se-pyar-ka-sahara-na-mila-status.jpg",
-    "https://www.kahanihindi.com/wp-content/uploads/2020/10/bedardi-se-pyar-ka-sahara-na-mila-status.jpg"
-  ]
+  // videoPosters = [
+  //   "https://www.kahanihindi.com/wp-content/uploads/2020/10/bedardi-se-pyar-ka-sahara-na-mila-status.jpg",
+  //   "https://www.kahanihindi.com/wp-content/uploads/2020/10/bedardi-se-pyar-ka-sahara-na-mila-status.jpg",
+  //   "https://www.kahanihindi.com/wp-content/uploads/2020/10/bedardi-se-pyar-ka-sahara-na-mila-status.jpg",
+  //   "https://www.kahanihindi.com/wp-content/uploads/2020/10/bedardi-se-pyar-ka-sahara-na-mila-status.jpg",
+  //   "https://www.kahanihindi.com/wp-content/uploads/2020/10/bedardi-se-pyar-ka-sahara-na-mila-status.jpg",
+  //   "https://www.kahanihindi.com/wp-content/uploads/2020/10/bedardi-se-pyar-ka-sahara-na-mila-status.jpg",
+  //   "https://www.kahanihindi.com/wp-content/uploads/2020/10/bedardi-se-pyar-ka-sahara-na-mila-status.jpg",
+  //   "https://www.kahanihindi.com/wp-content/uploads/2020/10/bedardi-se-pyar-ka-sahara-na-mila-status.jpg"
+  // ]
   constructor(
     public gs: GlobalService,
     public router: Router,

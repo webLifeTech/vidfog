@@ -26,7 +26,7 @@
 
         <ion-fab-button color="secondary" size="small" class="fab_btn"
           (click)="sahreVideo(videoURL+vidRow.link);$event.stopPropagation()">
-          <ion-icon name="arrow-redo-circle-outline" class="blkColor"></ion-icon>
+          <ion-icon name="share-social-outline" class="blkColor"></ion-icon>
         </ion-fab-button>
 
         <!-- <ion-fab-button color="secondary" size="small" class="fab_btn">
@@ -35,7 +35,8 @@
 
         <ion-fab-button color="secondary" size="small" class="fab_btn"
           (click)="downloadVideo(videoURL+vidRow.link);$event.stopPropagation()">
-          <ion-icon name="arrow-down-circle-outline" class="blkColor"></ion-icon>
+          <!-- <ion-icon name="arrow-down-circle-outline" class="blkColor"></ion-icon> -->
+          <img src="assets/download.svg" alt="" style="width: 24px!important;"/>
         </ion-fab-button>
         <!-- <ion-fab-button color="secondary" size="small" class="fab_btn">
           <ion-spinner name="dots"></ion-spinner>
@@ -46,7 +47,7 @@
           <ion-icon name="warning-outline" class="blkColor"></ion-icon>
         </ion-fab-button>
       </ion-fab>
-      <span style="position: absolute;top: 10px;color: white;left: 16px;font-size: 14px;">
+      <span style="position: absolute;top: 10px;color: white;left: 16px;font-size: 14px;    text-shadow: 0px 0px 8px black;">
         <span>@parasparas</span><br><br>
         <span style="margin-top: 6px;"><b>Hindi</b> - Love</span>
       </span>

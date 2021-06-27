@@ -10,13 +10,19 @@ import { AppVersion } from '@ionic-native/app-version/ngx';
 import { Camera } from '@ionic-native/camera/ngx';
 import { Market } from '@ionic-native/market/ngx';
 import { SocialSharing } from '@ionic-native/social-sharing/ngx';
+import { HttpClientModule } from '@angular/common/http';
 
 
 
 @NgModule({
   declarations: [AppComponent],
   entryComponents: [],
-  imports: [BrowserModule, IonicModule.forRoot(), AppRoutingModule],
+  imports: [
+    BrowserModule,
+    IonicModule.forRoot(),
+    AppRoutingModule,
+    HttpClientModule
+  ],
   providers: [
     AppVersion,
     Camera,

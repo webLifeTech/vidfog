@@ -8,14 +8,14 @@ import { AlertController } from '@ionic/angular';
 })
 export class GlobalService {
   videoPosters = [
-    "https://cdn2.momjunction.com/wp-content/uploads/2021/01/50-All-New-Couple-Photo-Pose-Ideas-In-2021-Banner.jpg",
-    "https://cdn2.momjunction.com/wp-content/uploads/2021/01/50-All-New-Couple-Photo-Pose-Ideas-In-2021-Banner.jpg",
-    "https://cdn2.momjunction.com/wp-content/uploads/2021/01/50-All-New-Couple-Photo-Pose-Ideas-In-2021-Banner.jpg",
-    "https://cdn2.momjunction.com/wp-content/uploads/2021/01/50-All-New-Couple-Photo-Pose-Ideas-In-2021-Banner.jpg",
-    "https://cdn2.momjunction.com/wp-content/uploads/2021/01/50-All-New-Couple-Photo-Pose-Ideas-In-2021-Banner.jpg",
-    "https://cdn2.momjunction.com/wp-content/uploads/2021/01/50-All-New-Couple-Photo-Pose-Ideas-In-2021-Banner.jpg",
-    "https://cdn2.momjunction.com/wp-content/uploads/2021/01/50-All-New-Couple-Photo-Pose-Ideas-In-2021-Banner.jpg",
-    "https://cdn2.momjunction.com/wp-content/uploads/2021/01/50-All-New-Couple-Photo-Pose-Ideas-In-2021-Banner.jpg"
+    "https://www.kahanihindi.com/wp-content/uploads/2020/10/new-Love-status-videos-14.jpg",
+    "https://www.kahanihindi.com/wp-content/uploads/2020/10/new-Love-status-videos-16.jpg",
+    "https://www.kahanihindi.com/wp-content/uploads/2020/10/new-Love-status-videos-13.jpg",
+    "https://www.kahanihindi.com/wp-content/uploads/2020/10/new-Love-status-videos-20.jpg",
+    "https://www.kahanihindi.com/wp-content/uploads/2020/10/new-Love-status-videos-19.jpg",
+    "https://www.kahanihindi.com/wp-content/uploads/2020/10/new-Love-status-videos-18.jpg",
+    "https://www.kahanihindi.com/wp-content/uploads/2020/10/new-Love-status-videos-17.jpg",
+    "https://www.kahanihindi.com/wp-content/uploads/2020/10/new-Love-status-videos-12.jpg",
   ]
   constructor(
     public market: Market,
