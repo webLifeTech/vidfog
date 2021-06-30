@@ -37,6 +37,14 @@ const routes: Routes = [
   {
     path: 'video-slides',
     loadChildren: () => import('./pages/video-slides/video-slides.module').then(m => m.VideoSlidesPageModule)
+  },
+  {
+    path: 'quotes',
+    loadChildren: () => import('./pages/quotes/quotes.module').then( m => m.QuotesPageModule)
+  },
+  {
+    path: 'privacy-police',
+    loadChildren: () => import('./pages/privacy-police/privacy-police.module').then( m => m.PrivacyPolicePageModule)
   }
 
 ];

@@ -2,11 +2,11 @@ import { Component, OnInit } from '@angular/core';
 import { GlobalService } from 'src/app/services/global.service';
 
 @Component({
-  selector: 'app-upload',
-  templateUrl: './upload.page.html',
-  styleUrls: ['./upload.page.scss'],
+  selector: 'app-quotes',
+  templateUrl: './quotes.page.html',
+  styleUrls: ['./quotes.page.scss'],
 })
-export class UploadPage implements OnInit {
+export class QuotesPage implements OnInit {
 
   constructor(
     public gs: GlobalService

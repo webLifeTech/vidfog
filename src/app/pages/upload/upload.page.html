@@ -8,7 +8,7 @@
 </ion-header>
 
 <ion-content color="primary">
-  <ion-card class="upload_card" button color="light">
+  <ion-card class="upload_card" button color="primary">
     <div class="ion-text-center">
 
       <p style="align-items: center;display: flex;justify-content: center">
@@ -22,18 +22,8 @@
     <ion-row>
       <ion-col size="12">
         <ion-item color="primary" style="border: 1px solid white;">
-          <ion-input type="text" placeholder="Video title"></ion-input>
-        </ion-item>
-      </ion-col>
-      <ion-col size="6">
-        <ion-item color="primary">
           <ion-label>Select Langauge</ion-label>
-        </ion-item>
-      </ion-col>
-      <ion-col size="6">
-        <ion-item>
-          <!-- <ion-label>Langauge</ion-label> -->
-          <ion-select value="Hindi" placeholder="Langauge">
+          <ion-select value="Hindi">
             <ion-select-option value="Hindi">Hindi</ion-select-option>
             <ion-select-option value="English">English</ion-select-option>
             <ion-select-option value="Gujarati">Gujarati</ion-select-option>
@@ -41,15 +31,10 @@
           </ion-select>
         </ion-item>
       </ion-col>
-      <ion-col size="6">
-        <ion-item color="primary">
+      <ion-col size="12">
+        <ion-item color="primary" style="border: 1px solid white;">
           <ion-label>Select Category</ion-label>
-        </ion-item>
-      </ion-col>
-      <ion-col size="6">
-        <ion-item>
-          <!-- <ion-label>Pizza</ion-label> -->
-          <ion-select value="peperoni" multiple="true" placeholder="Cat..">
+          <ion-select value="peperoni">
             <ion-select-option value="New">New</ion-select-option>
             <ion-select-option value="Love">Love</ion-select-option>
             <ion-select-option value="Sad">Sad</ion-select-option>

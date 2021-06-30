@@ -1,4 +1,6 @@
 import { Component, OnInit } from '@angular/core';
+import { Router } from '@angular/router';
+import { GlobalService } from 'src/app/services/global.service';
 
 @Component({
   selector: 'app-trending',
@@ -6,19 +8,17 @@ import { Component, OnInit } from '@angular/core';
   styleUrls: ['./trending.page.scss'],
 })
 export class TrendingPage implements OnInit {
-  videoPosters = [
-    "https://www.kahanihindi.com/wp-content/uploads/2020/10/bedardi-se-pyar-ka-sahara-na-mila-status.jpg",
-    "https://www.kahanihindi.com/wp-content/uploads/2020/10/bedardi-se-pyar-ka-sahara-na-mila-status.jpg",
-    "https://www.kahanihindi.com/wp-content/uploads/2020/10/bedardi-se-pyar-ka-sahara-na-mila-status.jpg",
-    "https://www.kahanihindi.com/wp-content/uploads/2020/10/bedardi-se-pyar-ka-sahara-na-mila-status.jpg",
-    "https://www.kahanihindi.com/wp-content/uploads/2020/10/bedardi-se-pyar-ka-sahara-na-mila-status.jpg",
-    "https://www.kahanihindi.com/wp-content/uploads/2020/10/bedardi-se-pyar-ka-sahara-na-mila-status.jpg",
-    "https://www.kahanihindi.com/wp-content/uploads/2020/10/bedardi-se-pyar-ka-sahara-na-mila-status.jpg",
-    "https://www.kahanihindi.com/wp-content/uploads/2020/10/bedardi-se-pyar-ka-sahara-na-mila-status.jpg"
-  ]
-  constructor() { }
+  constructor(
+    public gs: GlobalService,
+    public router: Router
+  ) { }
 
   ngOnInit() {
+  }
+
+  goVideoSlides() {
+    this.router.navigate(['/video-slides']);
+    // this.router.navigate(['/video-slides'], { queryParams: { item: JSON.stringify(item) } });
   }
 
 }

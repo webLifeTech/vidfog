@@ -7,7 +7,7 @@ import { AlertController } from '@ionic/angular';
   styleUrls: ['./profile.page.scss'],
 })
 export class ProfilePage implements OnInit {
-  profileFeed: any = 'faverite';
+  profileFeed: any = 'myvideo';
   constructor(
     public alertController: AlertController
   ) { }
