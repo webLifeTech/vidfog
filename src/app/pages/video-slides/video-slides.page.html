@@ -42,8 +42,8 @@
           <ion-spinner name="dots"></ion-spinner>
         </ion-fab-button> -->
 
-        <ion-fab-button color="secondary" size="small" class="fab_btn">
-          <!-- (click)="gs.reportPopup();$event.stopPropagation()" -->
+        <ion-fab-button (click)="gs.reportPopup();$event.stopPropagation()" color="secondary" size="small"
+          class="fab_btn">
           <ion-icon name="warning-outline" class="blkColor"></ion-icon>
         </ion-fab-button>
       </ion-fab>

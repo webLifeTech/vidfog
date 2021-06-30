@@ -43,7 +43,7 @@ export class GlobalService {
   async languagePopup() {
     const alert = await this.alertController.create({
       cssClass: 'my-custom-class',
-      header: 'Checkbox',
+      header: 'Languages',
       inputs: [
         {
           name: 'Hindi',

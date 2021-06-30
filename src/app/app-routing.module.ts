@@ -45,6 +45,10 @@ const routes: Routes = [
   {
     path: 'privacy-police',
     loadChildren: () => import('./pages/privacy-police/privacy-police.module').then( m => m.PrivacyPolicePageModule)
+  },
+  {
+    path: 'login',
+    loadChildren: () => import('./pages/login/login.module').then( m => m.LoginPageModule)
   }
 
 ];

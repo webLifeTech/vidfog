@@ -1,5 +1,6 @@
 import { Component, OnInit } from '@angular/core';
 import { AlertController } from '@ionic/angular';
+import { GlobalService } from 'src/app/services/global.service';
 
 @Component({
   selector: 'app-profile',
@@ -9,7 +10,8 @@ import { AlertController } from '@ionic/angular';
 export class ProfilePage implements OnInit {
   profileFeed: any = 'myvideo';
   constructor(
-    public alertController: AlertController
+    public alertController: AlertController,
+    public gs: GlobalService,
   ) { }
 
   ngOnInit() {

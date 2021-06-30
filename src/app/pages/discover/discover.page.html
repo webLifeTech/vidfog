@@ -6,13 +6,13 @@
     <ion-title>Category</ion-title>
     <!-- Discover -->
     <ion-buttons slot="end">
-      <ion-button>
+      <ion-button (click)="gs.languagePopup()">
         <ion-icon slot="icon-only" color="secondary" name="globe-outline"></ion-icon>
       </ion-button>
-      <ion-button>
+      <ion-button routerLink="/faverite">
         <ion-icon slot="icon-only" color="danger" name="heart"></ion-icon>
       </ion-button>
-      <ion-button>
+      <ion-button routerLink="/download">
         <ion-icon slot="icon-only" color="light" name="arrow-down-circle-outline"></ion-icon>
       </ion-button>
     </ion-buttons>
