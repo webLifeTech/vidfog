@@ -21,41 +21,16 @@
 
 <ion-content color="primary">
   <!-- <ion-segment scrollable value="heart"> -->
-  <ion-list-header>
-    <ion-label color="light">New</ion-label>
-    <ion-button color="light">See All</ion-button>
-  </ion-list-header>
-  <div class="scroll_div">
-    <ng-container class="" *ngFor="let item of gs.videoPosters">
-      <img [src]="item" alt="" style="width: 120px;padding: 6px;">
-    </ng-container>
-  </div>
-  <ion-list-header>
-    <ion-label color="light">New</ion-label>
-    <ion-button color="light">See All</ion-button>
-  </ion-list-header>
-  <div class="scroll_div">
-    <ng-container class="" *ngFor="let item of gs.videoPosters">
-      <img [src]="item" alt="" style="width: 120px;padding: 6px;">
-    </ng-container>
-  </div>
-  <ion-list-header>
-    <ion-label color="light">Love-Romantic</ion-label>
-    <ion-button color="light">See All</ion-button>
-  </ion-list-header>
-  <div class="scroll_div">
-    <ng-container class="" *ngFor="let item of gs.videoPosters">
-      <img [src]="item" alt="" style="width: 120px;padding: 6px;">
-    </ng-container>
-  </div>
-  <ion-list-header>
-    <ion-label color="light">Sad</ion-label>
-    <ion-button color="light">See All</ion-button>
-  </ion-list-header>
-  <div class="scroll_div">
-    <ng-container class="" *ngFor="let item of gs.videoPosters">
-      <img [src]="item" alt="" style="width: 120px;padding: 6px;">
-    </ng-container>
-  </div>
+  <ng-container *ngFor="let item of allCategoryList">
+    <ion-list-header>
+      <ion-label color="light">{{item.category_name}}</ion-label>
+      <ion-button color="light">See All</ion-button>
+    </ion-list-header>
+    <div *ngIf="item.videoData.length" class="scroll_div">
+      <ng-container class="" *ngFor="let Row of item.videoData">
+        <img [src]="Row.video_thumb" alt="" style="width: 120px;padding: 6px;">
+      </ng-container>
+    </div>
+  </ng-container>
   <!-- </ion-segment> -->
 </ion-content>

@@ -1,7 +1,8 @@
 import { Injectable } from '@angular/core';
 import { Market } from '@ionic-native/market/ngx';
 import { SocialSharing } from '@ionic-native/social-sharing/ngx';
-import { AlertController } from '@ionic/angular';
+import { AlertController, ToastController } from '@ionic/angular';
+import { ApiService } from './api.service';
 
 @Injectable({
   providedIn: 'root'
@@ -17,74 +18,61 @@ export class GlobalService {
     "https://www.kahanihindi.com/wp-content/uploads/2020/10/new-Love-status-videos-17.jpg",
     "https://www.kahanihindi.com/wp-content/uploads/2020/10/new-Love-status-videos-12.jpg",
   ]
+
+  allVideoLanguage: any = [];
+  allVideoLangTemp: any = [];
+  homeVideos: any = [];
   constructor(
     public market: Market,
     public socialSharing: SocialSharing,
     public alertController: AlertController,
-  ) { }
+    public api: ApiService,
+    public tc: ToastController
+  ) {
+    this.getLanguageList();
+    this.getHomeVideos();
+  }
 
-  appShare() {
-    this.socialSharing.share(
-      'Swag Bio Quotes Idea download app to make your instagram professional profile (3500+) Bios, Share and Give 5 Stare Review',
-      'Thank you',
-      '',
-      'https://play.google.com/store/apps/details?id=com.lifetechs.swagbio'
-    ).then((res) => {
-      // Success!
-    }).catch((error) => {
-      // Error!
+  getLanguageList() {
+    this.api.post('getLanguageList', '').then((res) => {
+      console.log("res>>>>", res);
+      if (res['ResponseCode'] == 1) {
+        this.allVideoLanguage = res['ResultData'];
+        console.log(this.allVideoLanguage);
+        for (let i in this.allVideoLanguage) {
+          this.allVideoLangTemp.push({
+            type: 'checkbox',
+            label: this.allVideoLanguage[i].language_name,
+            value: this.allVideoLanguage[i].language_id,
+            checked: true
+          })
+        }
+      } else {
+        this.messageToast('Something went wrong');
+      }
+    }, err => {
+      this.messageToast('Something went wrong');
     })
   }
 
-  rateApp() {
-    this.market.open('com.lifetechs.swagbio');
+  getHomeVideos() {
+    this.api.post('getHomePageVideoList', '').then((res) => {
+      if (res['ResponseCode'] == 1) {
+        this.homeVideos = res['ResultData'];
+        console.log("homeVideos>>>>", this.homeVideos);
+      } else {
+        this.messageToast('Something went wrong');
+      }
+    }, err => {
+      this.messageToast('Something went wrong');
+    })
   }
 
   async languagePopup() {
     const alert = await this.alertController.create({
       cssClass: 'my-custom-class',
       header: 'Languages',
-      inputs: [
-        {
-          name: 'Hindi',
-          type: 'checkbox',
-          label: 'Hindi',
-          value: 'value1',
-          handler: () => {
-            console.log('Checkbox 1 selected');
-          }
-        },
-
-        {
-          name: 'English',
-          type: 'checkbox',
-          label: 'English',
-          value: 'value2',
-          handler: () => {
-            console.log('Checkbox 2 selected');
-          }
-        },
-
-        {
-          name: 'Gujarati',
-          type: 'checkbox',
-          label: 'Gujarati',
-          value: 'value3',
-          handler: () => {
-            console.log('Checkbox 3 selected');
-          }
-        },
-
-        {
-          name: 'Marathi',
-          type: 'checkbox',
-          label: 'Marathi',
-          value: 'value4',
-          handler: () => {
-            console.log('Checkbox 4 selected');
-          }
-        }
-      ],
+      inputs: this.allVideoLangTemp,
       buttons: [
         {
           text: 'Cancel',
@@ -95,8 +83,12 @@ export class GlobalService {
           }
         }, {
           text: 'Ok',
-          handler: () => {
-            console.log('Confirm Ok');
+          handler: (res) => {
+            console.log(String(res));
+            if (res.length) {
+
+              console.log('Confirm Ok');
+            }
           }
         }
       ]
@@ -157,5 +149,27 @@ export class GlobalService {
       ]
     });
     await alert.present();
+  }
+
+  async messageToast(message) {
+    const toast = await this.tc.create({
+      message: message,
+      mode: 'ios',
+      duration: 4000
+    });
+    toast.present();
+  }
+
+  appShare() {
+    this.socialSharing.share(
+      'Swag Bio Quotes Idea download app to make your instagram professional profile (3500+) Bios, Share and Give 5 Stare Review',
+      'Thank you',
+      '',
+      'https://play.google.com/store/apps/details?id=com.lifetechs.swagbio'
+    ).then((res) => { }).catch((error) => { })
+  }
+
+  rateApp() {
+    this.market.open('com.lifetechs.swagbio');
   }
 }

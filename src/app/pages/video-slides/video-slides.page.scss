@@ -23,7 +23,13 @@ video::-webkit-media-controls-mute-button {
 }
 
 .fab_btn {
-    margin-bottom: 18px;
+    margin-bottom: 4px;
     --ion-color-base: #00000033 !important;
     --box-shadow: none;
+}
+
+.count_text{
+    color: white;
+    margin: 0;
+    text-shadow: 0px 0px 8px black;
 }

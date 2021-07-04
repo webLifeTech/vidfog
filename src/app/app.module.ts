@@ -14,6 +14,7 @@ import { UniqueDeviceID } from '@ionic-native/unique-device-id/ngx';
 import { Network } from '@ionic-native/network/ngx';
 import { File } from '@ionic-native/file/ngx';
 import { HttpClientModule } from '@angular/common/http';
+import { ReactiveFormsModule, FormsModule } from '@angular/forms';
 
 
 
@@ -25,7 +26,9 @@ import { HttpClientModule } from '@angular/common/http';
     BrowserModule,
     IonicModule.forRoot(),
     AppRoutingModule,
-    HttpClientModule
+    HttpClientModule,
+    FormsModule,
+    ReactiveFormsModule,
   ],
   providers: [
     AppVersion,

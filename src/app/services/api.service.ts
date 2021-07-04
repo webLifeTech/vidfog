@@ -1,15 +1,16 @@
 import { Injectable, resolveForwardRef } from '@angular/core';
-import { HttpClient } from '@angular/common/http'
+import { HttpClient, HttpHeaders } from '@angular/common/http'
 
 @Injectable({
   providedIn: 'root'
 })
 export class ApiService {
-  serverURl: string = 'http://davaexim.com/ERP/mlm/api/Mlm.php';
-  imageURl: string = 'http://davaexim.com/ERP/mlm/admin/images/';
+  serverURl: string = 'http://4kfullscreenvideostatus.com/appv1/videoapi/';
   constructor(
     public http: HttpClient
-  ) { }
+  ) {
+    this.post('getLanguageList', '');
+  }
 
   get(url: string) {
     return new Promise((resolve, reject) => {
@@ -21,10 +22,22 @@ export class ApiService {
     })
   }
 
+  // this.api.post('getLanguageList', '').then((res) => {
+  //   console.log("res>>>>", res);
+  //   if (res['ResponseCode'] == 1) {
+  //     this.allVideoLanguage = res['ResultData'];
+  //     console.log(this.allVideoLanguage);
+  //   } else {
+  //     this.messageToast('Something went wrong');
+  //   }
+  // }, err => {
+  //   this.messageToast('Something went wrong');
+  // })
 
-  post(data: any) {
+
+  post(url: string, data: any) {
     return new Promise((resolve, reject) => {
-      this.http.post(this.serverURl, data).subscribe((result) => {
+      this.http.post(this.serverURl + url, '').subscribe((result) => {
         resolve(result);
       }, (error) => {
         reject(error);
@@ -33,7 +46,7 @@ export class ApiService {
   }
 
 
-  put(url: string, data: any) {
+  put(url?: string, data?: any) {
     return new Promise((resolve, reject) => {
       this.http.put(this.serverURl + url, data).subscribe((result) => {
         resolve(result);
@@ -43,7 +56,7 @@ export class ApiService {
     })
   }
 
-  delete(url: string, data: any) {
+  delete(url?: string, data?: any) {
     return new Promise((resolve, reject) => {
       this.http.delete(this.serverURl + url + data).subscribe((result) => {
         resolve(result);
@@ -53,7 +66,7 @@ export class ApiService {
     })
   }
 
-  postFormData(url: string, formData: FormData, options?) {
+  postFormData(url?: string, formData?: FormData, options?) {
     return new Promise((resolve, reject) => {
       this.http.post(this.serverURl + url, formData).subscribe((result) => {
         resolve(result);
