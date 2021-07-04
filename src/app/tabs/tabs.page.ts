@@ -13,7 +13,8 @@ export class TabsPage {
   ) { }
 
   upload() {
-    this.router.navigate(['/upload']);
+    this.router.navigate(['/login']);
+    // this.router.navigate(['/upload']);
   }
 
 }

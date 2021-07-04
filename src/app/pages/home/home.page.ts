@@ -1,5 +1,6 @@
 import { Component, OnInit } from '@angular/core';
 import { Router } from '@angular/router';
+import { ApiService } from 'src/app/services/api.service';
 import { GlobalService } from 'src/app/services/global.service';
 
 @Component({
@@ -20,10 +21,21 @@ export class HomePage implements OnInit {
   // ]
   constructor(
     public gs: GlobalService,
+    public api: ApiService,
     public router: Router,
   ) { }
 
   ngOnInit() {
+    // this.getAllvideo()
+  }
+
+  getAllvideo() {
+    // let body = {
+    //   language_id: "1, 2"
+    // }
+    this.api.post('getLanguageList', {}).then((res) => {
+      console.log("res>>>>", res);
+    })
   }
 
   goVideoSlides() {

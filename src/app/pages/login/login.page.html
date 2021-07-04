@@ -1,9 +1,24 @@
 <ion-header>
-  <ion-toolbar>
-    <ion-title>login</ion-title>
+  <ion-toolbar color="primary">
+    <ion-title>Login</ion-title>
   </ion-toolbar>
 </ion-header>
 
-<ion-content>
+<ion-content color="primary">
 
+  <div style="text-align: center;margin-top: 100px">
+    <img src="assets/appLogo.jpeg" width="220px" height="220px" alt="appLogo" />
+  </div>
+  <form [formGroup]="loginForm" (ngSubmit)="loginUser()">
+    <div class="ion-padding">
+      <ion-item color="primary" style="border: 1px solid white;">
+        <ion-input placeholder="User Name" formControlName="userName" type="text"></ion-input>
+      </ion-item>
+      <div size="12" class="ion-text-center ion-padding-top">
+        <ion-button type="submit" class="ion-padding-horizontal" color="secondary" style="height: 50px;width: 170px;">
+          Login
+        </ion-button>
+      </div>
+    </div>
+  </form>
 </ion-content>
