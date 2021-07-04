@@ -3,10 +3,11 @@ import { ActivatedRoute, Router } from '@angular/router';
 import { AlertController, IonContent, IonSlides, Platform } from '@ionic/angular';
 import { GlobalService } from '../../services/global.service';
 import { SocialSharing } from '@ionic-native/social-sharing/ngx';
+import { ApiService } from 'src/app/services/api.service';
 // import { AdMobFree } from '@ionic-native/admob-free/ngx';
 // import { AdmobfreeService } from 'src/app/services/admobfree.service';
-// import { FileTransfer, FileUploadOptions, FileTransferObject } from '@ionic-native/file-transfer/ngx';
-// import { File } from '@ionic-native/file';
+import { FileTransfer, FileUploadOptions, FileTransferObject } from '@ionic-native/file-transfer/ngx';
+import { File } from '@ionic-native/file';
 
 @Component({
   selector: 'app-video-slides',
@@ -15,15 +16,6 @@ import { SocialSharing } from '@ionic-native/social-sharing/ngx';
 })
 export class VideoSlidesPage implements OnInit {
   getVideoObj: any = {};
-  // constructor(
-  // ) {
-  //   this.getVideoObj = JSON.parse(this.route.snapshot.queryParamMap.get('item'));
-  //   console.log("this.getVideoObj>>>>>>", this.getVideoObj);
-  // }
-
-  // ngOnInit() {
-  // }
-
   getAllVideos: any = [];
   foldername: any;
   spinner: boolean = true;
@@ -38,6 +30,7 @@ export class VideoSlidesPage implements OnInit {
   setTimeout: any;
   slideOpts = {
     loop: false,
+    initialSlide: 1,
     direction: 'vertical',
   };
   @ViewChild('isNewVideo') isNewVideo: ElementRef;
@@ -46,57 +39,21 @@ export class VideoSlidesPage implements OnInit {
   constructor(
     public router: Router,
     public alertCtrl: AlertController,
-    // public fileTransfer: FileTransfer,
-    // public file: File,
+    public fileTransfer: FileTransfer,
+    public file: File,
     // public admobS: AdmobfreeService,
     public gs: GlobalService,
     private route: ActivatedRoute,
     public socialSharing: SocialSharing,
+    public api: ApiService,
     // public adMobFree: AdMobFree,
     private platform: Platform,
   ) {
     this.platform.ready().then(() => {
-      // let getCatBioObj = JSON.parse(this.route.snapshot.queryParamMap.get('item'));
-      // this.getAllVideos = getCatBioObj['videos'];
-      this.getAllVideos = [
-        {
-          "videoUrl": "https://www.kahanihindi.com/wp-content/uploads/2021/05/full-screen-status-23.mp4",
-          "thubhUrl": "https://www.kahanihindi.com/wp-content/uploads/2021/05/full-screen-status-23.jpg"
-        },
-        {
-          "videoUrl": "https://www.kahanihindi.com/wp-content/uploads/2021/05/full-screen-status-22.mp4",
-          "thubhUrl": "https://www.kahanihindi.com/wp-content/uploads/2021/05/full-screen-status-22.jpg"
-        },
-        {
-          "videoUrl": "https://www.kahanihindi.com/wp-content/uploads/2021/05/full-screen-status-21.mp4",
-          "thubhUrl": "https://www.kahanihindi.com/wp-content/uploads/2021/05/full-screen-status-21.jpg"
-        },
-        {
-          "videoUrl": "https://www.kahanihindi.com/wp-content/uploads/2021/05/full-screen-status-20.mp4",
-          "thubhUrl": "https://www.kahanihindi.com/wp-content/uploads/2021/05/full-screen-status-20.jpg"
-        },
-        {
-          "videoUrl": "https://www.kahanihindi.com/wp-content/uploads/2021/05/full-screen-status-19.mp4",
-          "thubhUrl": "https://www.kahanihindi.com/wp-content/uploads/2021/05/full-screen-status-19.jpg"
-        },
-        {
-          "videoUrl": "https://www.kahanihindi.com/wp-content/uploads/2021/05/full-screen-status-18.mp4",
-          "thubhUrl": "https://www.kahanihindi.com/wp-content/uploads/2021/05/full-screen-status-18.jpg"
-        },
-        {
-          "videoUrl": "https://www.kahanihindi.com/wp-content/uploads/2021/05/full-screen-status-17.mp4",
-          "thubhUrl": "https://www.kahanihindi.com/wp-content/uploads/2021/05/full-screen-status-17.jpg"
-        },
-        {
-          "videoUrl": "https://www.kahanihindi.com/wp-content/uploads/2021/05/full-screen-status-16.mp4",
-          "thubhUrl": "https://www.kahanihindi.com/wp-content/uploads/2021/05/full-screen-status-16.jpg"
-        },
-        {
-          "videoUrl": "https://www.kahanihindi.com/wp-content/uploads/2021/05/full-screen-status-15.mp4",
-          "thubhUrl": "https://www.kahanihindi.com/wp-content/uploads/2021/05/full-screen-status-15.jpg"
-        }
-      ]
-      // console.log("getCatBioObj>>>", getCatBioObj);
+      let getCatBioObj = JSON.parse(this.route.snapshot.queryParamMap.get('item'));
+      this.slideOpts.initialSlide = getCatBioObj.index;
+      this.getAllVideos = getCatBioObj.videoData;
+      console.log("getCatBioObj>>>>>>>>>>", this.getAllVideos);
       this.shownVideos = 0;
       this.previousInd = 0;
       this.spinner = false;
@@ -181,13 +138,67 @@ export class VideoSlidesPage implements OnInit {
     }
   }
 
-  viaVideoShare(url) {
-    // this.admobS.rendomAdShow();
+  downloadVideo(vidRow) {
+    this.downloadspinner = true;
+    var fileName = '4kVideoStatus' + new Date().getTime() + '.mp4';
+    const fileTransfer: FileTransferObject = this.fileTransfer.create();
+    const fileTransferDir = this.file.externalRootDirectory;
+    console.log("fileTransferDir<<<<<<<<<>>>>" + JSON.stringify(fileTransferDir));
+    const fileURL = fileTransferDir + '4k Video Status/' + fileName;
+    fileTransfer.download(vidRow.video_url, fileURL).then(
+      (entry) => {
+        this.downloadspinner = false;
+        let alert = this.alertCtrl.create({
+          header: 'Vibes Video Status',
+          message: 'Download Successfully!',
+          mode: 'ios',
+          cssClass: 'my_alertCtrl',
+          buttons: [
+            {
+              text: 'Ok',
+              cssClass: 'oky_btn',
+              handler: () => {
+                (<any>window).cordova.plugins.MediaScannerPlugin.scanFile(fileURL, () => { },
+                  (errr) => { }
+                );
+              },
+            },
+          ],
+        });
+        alert.then((res) => {
+          res.present();
+        });
+      },
+      (error) => {
+        console.log("error>>>>>>>>>>>>>" + JSON.stringify(error));
+        this.downloadspinner = false;
+      }
+    );
+  }
+
+  viaVideoShare(vidRow) {
     this.isVidShare = true;
-    this.socialSharing.share('', '', url, '').then((res) => {
+    this.socialSharing.share('👌🏻 10,000+ 4k Full Screen Video Status  (Free)Download Now 👇🏻👇🏻👇🏻👇🏻👇🏻', vidRow.video_url, 'https://play.google.com/store/apps/details?id=com.fullscreenvideostatus.hdvideostatus').then((res) => {
       this.isVidShare = false;
+      vidRow.video_share = Number(vidRow.video_share) + 1;
+      this.increateCount(vidRow.video_id, "2");
     }, (er) => {
       this.isVidShare = false;
     });
+  }
+
+  increateCount(video_id, type) {
+    let body = {
+      video_id: video_id,
+      type: type
+    }
+    this.api.post('increateCount', body).then((res) => {
+      if (res['ResponseCode'] == 1) {
+      } else {
+        this.gs.messageToast('Something went wrong');
+      }
+    }, err => {
+      this.gs.messageToast('Something went wrong');
+    })
   }
 }

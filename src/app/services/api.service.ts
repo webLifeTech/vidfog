@@ -8,9 +8,7 @@ export class ApiService {
   serverURl: string = 'http://4kfullscreenvideostatus.com/appv1/videoapi/';
   constructor(
     public http: HttpClient
-  ) {
-    this.post('getLanguageList', '');
-  }
+  ) { }
 
   get(url: string) {
     return new Promise((resolve, reject) => {
@@ -22,22 +20,12 @@ export class ApiService {
     })
   }
 
-  // this.api.post('getLanguageList', '').then((res) => {
-  //   console.log("res>>>>", res);
-  //   if (res['ResponseCode'] == 1) {
-  //     this.allVideoLanguage = res['ResultData'];
-  //     console.log(this.allVideoLanguage);
-  //   } else {
-  //     this.messageToast('Something went wrong');
-  //   }
-  // }, err => {
-  //   this.messageToast('Something went wrong');
-  // })
-
-
   post(url: string, data: any) {
+    let headers = new HttpHeaders()
+    headers.set('content-type', 'application/json')
+    headers.set('Access-Control-Allow-Origin', '*')
     return new Promise((resolve, reject) => {
-      this.http.post(this.serverURl + url, '').subscribe((result) => {
+      this.http.post(this.serverURl + url, data, { headers: headers }).subscribe((result) => {
         resolve(result);
       }, (error) => {
         reject(error);

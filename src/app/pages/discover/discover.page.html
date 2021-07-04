@@ -22,13 +22,14 @@
 <ion-content color="primary">
   <!-- <ion-segment scrollable value="heart"> -->
   <ng-container *ngFor="let item of allCategoryList">
-    <ion-list-header>
+    <ion-list-header style="border-left: 4px solid white;margin: 3px;">
       <ion-label color="light">{{item.category_name}}</ion-label>
       <ion-button color="light">See All</ion-button>
     </ion-list-header>
     <div *ngIf="item.videoData.length" class="scroll_div">
       <ng-container class="" *ngFor="let Row of item.videoData">
-        <img [src]="Row.video_thumb" alt="" style="width: 120px;padding: 6px;">
+        <img [src]="Row.video_thumb" alt=""
+          style="width: 120px;margin: 2px;object-fit: cover;border: 1px solid #717171;">
       </ng-container>
     </div>
   </ng-container>

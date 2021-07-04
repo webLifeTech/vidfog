@@ -13,10 +13,9 @@ import { SocialSharing } from '@ionic-native/social-sharing/ngx';
 import { UniqueDeviceID } from '@ionic-native/unique-device-id/ngx';
 import { Network } from '@ionic-native/network/ngx';
 import { File } from '@ionic-native/file/ngx';
+import { FileTransfer } from '@ionic-native/file-transfer/ngx';
 import { HttpClientModule } from '@angular/common/http';
 import { ReactiveFormsModule, FormsModule } from '@angular/forms';
-
-
 
 
 @NgModule({
@@ -38,6 +37,7 @@ import { ReactiveFormsModule, FormsModule } from '@angular/forms';
     UniqueDeviceID,
     Network,
     File,
+    FileTransfer,
     { provide: RouteReuseStrategy, useClass: IonicRouteStrategy }],
   bootstrap: [AppComponent],
 })

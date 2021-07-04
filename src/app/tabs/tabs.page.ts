@@ -1,5 +1,6 @@
 import { Component } from '@angular/core';
 import { Router } from '@angular/router';
+import { GlobalService } from '../services/global.service';
 
 @Component({
   selector: 'app-tabs',
@@ -9,12 +10,16 @@ import { Router } from '@angular/router';
 export class TabsPage {
 
   constructor(
-    public router: Router
+    public router: Router,
+    public gs: GlobalService,
   ) { }
 
   upload() {
-    this.router.navigate(['/login']);
-    // this.router.navigate(['/upload']);
+    if (this.gs.userData && this.gs.userData.user_id) {
+      this.router.navigate(['/upload']);
+    } else {
+      this.router.navigate(['/login']);
+    }
   }
 
 }

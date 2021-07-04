@@ -21,16 +21,29 @@
 <ion-content color="primary">
   <ion-grid fixed>
     <ion-row>
-      <ion-col size="6" *ngFor="let item of gs.videoPosters">
-        <ion-card (click)="goVideoSlides()" class="ion-no-margin img_card">
-          <ion-img [src]="item" alt="Image"></ion-img>
-          <div class="img_ovarlay">
-            <p>
-              <b>Hindi</b> - Love romentice
-            </p>
-          </div>
-        </ion-card>
-      </ion-col>
+      <ng-container *ngIf="allTrendingVideos.length">
+        <ion-col size="6" *ngFor="let item of allTrendingVideos; let inx = index">
+          <ion-card (click)="goVideoSlides(allTrendingVideos, inx)" class="ion-no-margin img_card">
+            <ion-img [src]="item.video_thumb" alt="Image"></ion-img>
+            <div class="img_ovarlay">
+              <p>
+                <b>{{item.language_name}}</b> - {{item.user_name}}
+              </p>
+            </div>
+          </ion-card>
+        </ion-col>
+      </ng-container>
+      <ng-container *ngIf="!allTrendingVideos.length">
+        <ion-col size="12">
+          <p class="ion-text-center">
+            No Videos!
+          </p>
+        </ion-col>
+      </ng-container>
     </ion-row>
   </ion-grid>
+  <ion-infinite-scroll color="light" threshold="100px" (ionInfinite)="loadData($event)">
+    <ion-infinite-scroll-content color="light" loadingSpinner="crescent" loadingText="Loading more data...">
+    </ion-infinite-scroll-content>
+  </ion-infinite-scroll>
 </ion-content>

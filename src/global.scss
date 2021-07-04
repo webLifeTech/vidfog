@@ -63,3 +63,18 @@
         margin-top: auto;margin-bottom: 8px;white-space: nowrap;overflow: hidden;text-overflow: ellipsis
     }
 }
+
+.costom_item{
+    border: 1px solid #3dc2ff40;
+    margin-bottom: 16px;
+    box-shadow: 0px 0px 10px -3px white;
+}
+
+ion-infinite-scroll-content {
+    ion-spinner{
+        color: white;
+    }
+    .infinite-loading-text{
+        color: white;
+    }
+}

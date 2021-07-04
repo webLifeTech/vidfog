@@ -4,6 +4,8 @@ import { AlertController, Platform } from '@ionic/angular';
 import { GlobalService } from './services/global.service';
 import { Network } from '@ionic-native/network/ngx';
 import { File } from '@ionic-native/file/ngx';
+import { UniqueDeviceID } from '@ionic-native/unique-device-id/ngx';
+import { ApiService } from './services/api.service';
 
 @Component({
   selector: 'app-root',
@@ -17,10 +19,12 @@ export class AppComponent {
   constructor(
     private platform: Platform,
     private _location: Location,
+    private uniqueDeviceID: UniqueDeviceID,
+    private file: File,
+    public network: Network,
     private alertCtrl: AlertController,
     public gs: GlobalService,
-    private file: File,
-    public network: Network
+    public api: ApiService
   ) {
     this.initializeApp();
   }
@@ -42,6 +46,14 @@ export class AppComponent {
         }
       }
       this.listenConnection();
+      this.createUserProfile();
+      this.gs.getLanguageList();
+
+      // let userD = localStorage.getItem('hdvideostatusUser');
+      // if(userD && userD['user_id']){
+
+      // }
+      // console.log("userD>>>", userD);
 
       this.file.createDir(this.file.externalRootDirectory, '4k Video Status', true)
         .then((result) => { })
@@ -78,5 +90,24 @@ export class AppComponent {
       res.present();
       this.alertInShown = true;
     });
+  }
+
+  createUserProfile() {
+    // this.uniqueDeviceID.get().then((uuid: any) => {
+    let body = {
+      "device_token": "03993340-1665-a36f-8692-160499703718"
+    }
+    this.api.post('createUserProfile', body).then((res) => {
+      // console.log("res>>>>"+JSON.stringify(res));
+      if (res['ResponseCode'] == 1) {
+        this.gs.userData = res['ResultData'];
+      } else {
+        this.gs.messageToast('Something went wrong');
+      }
+    }, error => {
+      console.log(JSON.stringify("error>>>>>>>>" + error));
+      this.gs.messageToast('Something went wrong');
+    })
+    // }).catch((error: any) => console.log(error));
   }
 }

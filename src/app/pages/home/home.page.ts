@@ -9,16 +9,6 @@ import { GlobalService } from 'src/app/services/global.service';
   styleUrls: ['./home.page.scss'],
 })
 export class HomePage implements OnInit {
-  // videoPosters = [
-  //   "https://www.kahanihindi.com/wp-content/uploads/2020/10/bedardi-se-pyar-ka-sahara-na-mila-status.jpg",
-  //   "https://www.kahanihindi.com/wp-content/uploads/2020/10/bedardi-se-pyar-ka-sahara-na-mila-status.jpg",
-  //   "https://www.kahanihindi.com/wp-content/uploads/2020/10/bedardi-se-pyar-ka-sahara-na-mila-status.jpg",
-  //   "https://www.kahanihindi.com/wp-content/uploads/2020/10/bedardi-se-pyar-ka-sahara-na-mila-status.jpg",
-  //   "https://www.kahanihindi.com/wp-content/uploads/2020/10/bedardi-se-pyar-ka-sahara-na-mila-status.jpg",
-  //   "https://www.kahanihindi.com/wp-content/uploads/2020/10/bedardi-se-pyar-ka-sahara-na-mila-status.jpg",
-  //   "https://www.kahanihindi.com/wp-content/uploads/2020/10/bedardi-se-pyar-ka-sahara-na-mila-status.jpg",
-  //   "https://www.kahanihindi.com/wp-content/uploads/2020/10/bedardi-se-pyar-ka-sahara-na-mila-status.jpg"
-  // ]
   constructor(
     public gs: GlobalService,
     public api: ApiService,
@@ -26,21 +16,31 @@ export class HomePage implements OnInit {
   ) { }
 
   ngOnInit() {
-    // this.getAllvideo()
-  }
-
-  getAllvideo() {
-    // let body = {
-    //   language_id: "1, 2"
-    // }
-    this.api.post('getLanguageList', {}).then((res) => {
-      console.log("res>>>>", res);
-    })
   }
 
   goVideoSlides() {
     this.router.navigate(['/video-slides']);
     // this.router.navigate(['/video-slides'], { queryParams: { item: JSON.stringify(item) } });
+  }
+
+  loadData(event) {
+    console.log("event", event);
+
+    let body = {
+      language_id: "",
+      start: this.gs.homeVideos.length,
+    }
+    console.log("event????", this.gs.homeVideos.length);
+    this.api.post('getHomePageVideoList', body).then((res) => {
+      if (res['ResponseCode'] == 1) {
+        this.gs.homeVideos = this.gs.homeVideos.concat(res['ResultData'])
+        console.log("this.gs.homeVideos>>>>", this.gs.homeVideos);
+      } else {
+        this.gs.messageToast('Something went wrong');
+      }
+    }, err => {
+      this.gs.messageToast('Something went wrong');
+    })
   }
 
 }
