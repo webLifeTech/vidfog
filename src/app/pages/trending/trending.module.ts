@@ -17,4 +17,4 @@ import { TrendingPage } from './trending.page';
   ],
   declarations: [TrendingPage]
 })
-export class TrendingPageModule {}
+export class TrendingPageModule { }

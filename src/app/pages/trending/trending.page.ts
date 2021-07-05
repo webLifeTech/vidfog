@@ -57,11 +57,14 @@ export class TrendingPage implements OnInit {
   }
 
   goVideoSlides(data, index) {
-    let body = {
-      videoData: data,
-      index: index,
-    }
-    this.router.navigate(['/video-slides'], { queryParams: { item: JSON.stringify(body) } });
+    this.router.navigate(['/video-slides'], {
+      queryParams: {
+        item: JSON.stringify({
+          videoData: data,
+          index: index,
+        })
+      }
+    });
   }
 
 }

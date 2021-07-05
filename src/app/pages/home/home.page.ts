@@ -18,9 +18,15 @@ export class HomePage implements OnInit {
   ngOnInit() {
   }
 
-  goVideoSlides() {
-    this.router.navigate(['/video-slides']);
-    // this.router.navigate(['/video-slides'], { queryParams: { item: JSON.stringify(item) } });
+  goVideoSlides(data, index) {
+    this.router.navigate(['/video-slides'], {
+      queryParams: {
+        item: JSON.stringify({
+          videoData: data,
+          index: index,
+        })
+      }
+    });
   }
 
   loadData(event) {

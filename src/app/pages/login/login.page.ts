@@ -1,5 +1,6 @@
 import { Component, OnInit } from '@angular/core';
 import { FormBuilder, FormGroup, Validators } from '@angular/forms';
+import { UniqueDeviceID } from '@ionic-native/unique-device-id/ngx';
 import { ApiService } from 'src/app/services/api.service';
 import { GlobalService } from 'src/app/services/global.service';
 
@@ -12,14 +13,15 @@ export class LoginPage implements OnInit {
   loginForm: FormGroup;
   currentFileUpload: any = null;
   base64Image: any = null;
+  deviceID: any // = "03993340-1665-a36f-8692-160499703718";
   pageLabel: any = 'Login'
   constructor(
     private fb: FormBuilder,
     public gs: GlobalService,
     public api: ApiService,
+    private uniqueDeviceID: UniqueDeviceID
   ) {
     this.loginForm = this.fb.group({
-      device_token: ['', Validators.required],
       user_name: ['', Validators.required],
       user_email: [''],
       user_profile: [''],
@@ -35,6 +37,9 @@ export class LoginPage implements OnInit {
   }
 
   ngOnInit() {
+    this.uniqueDeviceID.get().then((uuid: any) => {
+      this.deviceID = uuid;
+    })
   }
 
   // My divece kye : 03993340-1665-a36f-8692-160499703718
@@ -43,7 +48,7 @@ export class LoginPage implements OnInit {
     if (this.loginForm.valid) {
       this.gs.presentLoading('Please Wait...');
       let formData = new FormData();
-      formData.append('device_token', this.loginForm.value.device_token);
+      formData.append('device_token', this.deviceID);
       formData.append('user_name', this.loginForm.value.user_name);
       formData.append('user_email', this.loginForm.value.user_email);
       formData.append('user_profile', this.currentFileUpload ? this.currentFileUpload : '');
@@ -88,7 +93,6 @@ export class LoginPage implements OnInit {
 
   setFormData(formData) {
     this.loginForm.patchValue({
-      device_token: formData.device_token,
       user_name: formData.user_name,
       user_email: formData.user_email,
       user_profile: formData.user_profile,

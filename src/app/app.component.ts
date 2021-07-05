@@ -1,11 +1,13 @@
 import { Component } from '@angular/core';
 import { Location } from '@angular/common';
-import { AlertController, Platform } from '@ionic/angular';
+import { AlertController, MenuController, Platform } from '@ionic/angular';
 import { GlobalService } from './services/global.service';
 import { Network } from '@ionic-native/network/ngx';
 import { File } from '@ionic-native/file/ngx';
 import { UniqueDeviceID } from '@ionic-native/unique-device-id/ngx';
 import { ApiService } from './services/api.service';
+import { AppVersion } from '@ionic-native/app-version/ngx';
+import { Router } from '@angular/router';
 
 @Component({
   selector: 'app-root',
@@ -23,7 +25,10 @@ export class AppComponent {
     private file: File,
     public network: Network,
     private alertCtrl: AlertController,
+    private menutCtrl: MenuController,
     public gs: GlobalService,
+    public appVersion: AppVersion,
+    public router: Router,
     public api: ApiService
   ) {
     this.initializeApp();
@@ -33,6 +38,7 @@ export class AppComponent {
     this.platform.backButton.subscribeWithPriority(10, (processNextHandler) => {
       console.log('Back press handler!');
       if (this._location.isCurrentPathEqualTo('/tabs/home')) {
+        navigator['app'].exitApp();
         processNextHandler();
       } else {
         this._location.back();
@@ -47,14 +53,8 @@ export class AppComponent {
       }
       this.listenConnection();
       this.createUserProfile();
+      this.getAppDetail();
       this.gs.getLanguageList();
-
-      // let userD = localStorage.getItem('hdvideostatusUser');
-      // if(userD && userD['user_id']){
-
-      // }
-      // console.log("userD>>>", userD);
-
       this.file.createDir(this.file.externalRootDirectory, '4k Video Status', true)
         .then((result) => { })
         .catch((err) => { });
@@ -93,14 +93,33 @@ export class AppComponent {
   }
 
   createUserProfile() {
-    // this.uniqueDeviceID.get().then((uuid: any) => {
-    let body = {
-      "device_token": "03993340-1665-a36f-8692-160499703718"
-    }
-    this.api.post('createUserProfile', body).then((res) => {
-      // console.log("res>>>>"+JSON.stringify(res));
+    this.uniqueDeviceID.get().then((uuid: any) => {
+      let body = {
+        "device_token": uuid
+      }
+      this.api.post('createUserProfile', body).then((res) => {
+        console.log(JSON.stringify("createUserProfile=====" + res));
+        if (res['ResponseCode'] == 1) {
+          this.gs.userData = res['ResultData'];
+          console.log(JSON.stringify("gs.userData>>>>>>>>" + this.gs.userData));
+        } else {
+          this.gs.messageToast('Something went wrong');
+        }
+      }, error => {
+        console.log(JSON.stringify("error>>>>>>>>" + error));
+        this.gs.messageToast('Something went wrong');
+      })
+    }).catch((error: any) => console.log(error));
+  }
+
+  getAppDetail() {
+    this.api.post('getAppDetail', '').then((res) => {
       if (res['ResponseCode'] == 1) {
-        this.gs.userData = res['ResultData'];
+        this.appVersion.getVersionNumber().then((versionNumber) => {
+          if (res['ResultData'].app_version != versionNumber) {
+            this.updatePopup()
+          }
+        })
       } else {
         this.gs.messageToast('Something went wrong');
       }
@@ -108,6 +127,40 @@ export class AppComponent {
       console.log(JSON.stringify("error>>>>>>>>" + error));
       this.gs.messageToast('Something went wrong');
     })
-    // }).catch((error: any) => console.log(error));
+  }
+
+  privacyPolice() {
+    this.router.navigate(['/privacy-police']);
+    this.menutCtrl.close();
+  }
+  quotes() {
+    this.router.navigate(['/quotes']);
+    this.menutCtrl.close();
+  }
+
+  async updatePopup() {
+    let alert = await this.alertCtrl.create({
+      header: 'Vibes Video Status',
+      message: 'New Update Available',
+      backdropDismiss: false,
+      mode: 'ios',
+      cssClass: 'my_alertCtrl',
+      buttons: [
+        {
+          text: 'Ignore',
+          role: 'cancel',
+          cssClass: 'cancel_btn',
+          handler: () => { },
+        },
+        {
+          text: 'Update',
+          cssClass: 'oky_btn',
+          handler: () => {
+            this.gs.rateApp();
+          },
+        },
+      ],
+    });
+    await alert.present();
   }
 }

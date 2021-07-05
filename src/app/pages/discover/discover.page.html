@@ -6,9 +6,9 @@
     <ion-title>Category</ion-title>
     <!-- Discover -->
     <ion-buttons slot="end">
-      <ion-button (click)="gs.languagePopup()">
+      <!-- <ion-button (click)="gs.languagePopup()">
         <ion-icon slot="icon-only" color="secondary" name="globe-outline"></ion-icon>
-      </ion-button>
+      </ion-button> -->
       <ion-button routerLink="/faverite">
         <ion-icon slot="icon-only" color="danger" name="heart"></ion-icon>
       </ion-button>
@@ -24,11 +24,11 @@
   <ng-container *ngFor="let item of allCategoryList">
     <ion-list-header style="border-left: 4px solid white;margin: 3px;">
       <ion-label color="light">{{item.category_name}}</ion-label>
-      <ion-button color="light">See All</ion-button>
+      <ion-button color="light" (click)="getVideoListByCategory(item.category_id)">See All</ion-button>
     </ion-list-header>
     <div *ngIf="item.videoData.length" class="scroll_div">
-      <ng-container class="" *ngFor="let Row of item.videoData">
-        <img [src]="Row.video_thumb" alt=""
+      <ng-container class="" *ngFor="let Row of item.videoData;let inx = index">
+        <img (click)="goVideoSlides(item.videoData, inx)" [src]="Row.video_thumb" alt=""
           style="width: 120px;margin: 2px;object-fit: cover;border: 1px solid #717171;">
       </ng-container>
     </div>

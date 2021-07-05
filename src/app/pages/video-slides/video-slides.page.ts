@@ -7,7 +7,7 @@ import { ApiService } from 'src/app/services/api.service';
 // import { AdMobFree } from '@ionic-native/admob-free/ngx';
 // import { AdmobfreeService } from 'src/app/services/admobfree.service';
 import { FileTransfer, FileUploadOptions, FileTransferObject } from '@ionic-native/file-transfer/ngx';
-import { File } from '@ionic-native/file';
+import { File } from '@ionic-native/file/ngx';
 
 @Component({
   selector: 'app-video-slides',
@@ -49,8 +49,8 @@ export class VideoSlidesPage implements OnInit {
     // public adMobFree: AdMobFree,
     private platform: Platform,
   ) {
-    this.platform.ready().then(() => {
-      let getCatBioObj = JSON.parse(this.route.snapshot.queryParamMap.get('item'));
+    this.platform.ready().then(async () => {
+      let getCatBioObj = await JSON.parse(this.route.snapshot.queryParamMap.get('item'));
       this.slideOpts.initialSlide = getCatBioObj.index;
       this.getAllVideos = getCatBioObj.videoData;
       console.log("getCatBioObj>>>>>>>>>>", this.getAllVideos);
@@ -72,8 +72,8 @@ export class VideoSlidesPage implements OnInit {
       //     }
       //   }, 100);
       // });
+      this.gs.checkFavVideo(this.getAllVideos[getCatBioObj.index].video_id);
     })
-    // this.service.checkFavVideo(this.videoURL+this.getAllVideos[0].link);
   }
 
   ngOnInit() {
@@ -138,6 +138,21 @@ export class VideoSlidesPage implements OnInit {
     }
   }
 
+  slideNextt() {
+    console.log("index");
+    this.slides.getActiveIndex().then((index) => {
+      console.log("yyyyyyyy>>", index);
+      this.gs.checkFavVideo(this.getAllVideos[index].video_id);
+    });
+  }
+  slidePrevv() {
+    this.slides.getActiveIndex().then((index) => {
+      console.log("iiiiii>>", index);
+      this.gs.checkFavVideo(this.getAllVideos[index].video_id);
+    });
+  }
+
+
   downloadVideo(vidRow) {
     this.downloadspinner = true;
     var fileName = '4kVideoStatus' + new Date().getTime() + '.mp4';
@@ -145,30 +160,31 @@ export class VideoSlidesPage implements OnInit {
     const fileTransferDir = this.file.externalRootDirectory;
     console.log("fileTransferDir<<<<<<<<<>>>>" + JSON.stringify(fileTransferDir));
     const fileURL = fileTransferDir + '4k Video Status/' + fileName;
-    fileTransfer.download(vidRow.video_url, fileURL).then(
-      (entry) => {
-        this.downloadspinner = false;
-        let alert = this.alertCtrl.create({
-          header: 'Vibes Video Status',
-          message: 'Download Successfully!',
-          mode: 'ios',
-          cssClass: 'my_alertCtrl',
-          buttons: [
-            {
-              text: 'Ok',
-              cssClass: 'oky_btn',
-              handler: () => {
-                (<any>window).cordova.plugins.MediaScannerPlugin.scanFile(fileURL, () => { },
-                  (errr) => { }
-                );
-              },
+    fileTransfer.download(vidRow.video_url, fileURL).then((entry) => {
+      this.downloadspinner = false;
+      vidRow.video_download = Number(vidRow.video_download) + 1;
+      this.gs.increateCount(vidRow.video_id, "1");
+      let alert = this.alertCtrl.create({
+        header: '4k Video Status',
+        message: 'Download Successfully!',
+        mode: 'ios',
+        cssClass: 'my_alertCtrl',
+        buttons: [
+          {
+            text: 'Ok',
+            cssClass: 'oky_btn',
+            handler: () => {
+              (<any>window).cordova.plugins.MediaScannerPlugin.scanFile(fileURL, () => { },
+                (errr) => { }
+              );
             },
-          ],
-        });
-        alert.then((res) => {
-          res.present();
-        });
-      },
+          },
+        ],
+      });
+      alert.then((res) => {
+        res.present();
+      });
+    },
       (error) => {
         console.log("error>>>>>>>>>>>>>" + JSON.stringify(error));
         this.downloadspinner = false;
@@ -181,24 +197,16 @@ export class VideoSlidesPage implements OnInit {
     this.socialSharing.share('👌🏻 10,000+ 4k Full Screen Video Status  (Free)Download Now 👇🏻👇🏻👇🏻👇🏻👇🏻', vidRow.video_url, 'https://play.google.com/store/apps/details?id=com.fullscreenvideostatus.hdvideostatus').then((res) => {
       this.isVidShare = false;
       vidRow.video_share = Number(vidRow.video_share) + 1;
-      this.increateCount(vidRow.video_id, "2");
+      this.gs.increateCount(vidRow.video_id, "2");
     }, (er) => {
       this.isVidShare = false;
     });
   }
 
-  increateCount(video_id, type) {
-    let body = {
-      video_id: video_id,
-      type: type
-    }
-    this.api.post('increateCount', body).then((res) => {
-      if (res['ResponseCode'] == 1) {
-      } else {
-        this.gs.messageToast('Something went wrong');
-      }
-    }, err => {
-      this.gs.messageToast('Something went wrong');
-    })
-  }
+  // favriteVideo(vidRow) {
+  //   console.log("vidRow", vidRow);
+
+  //   vidRow.video_share = Number(vidRow.video_share) + 1;
+  //   this.gs.increateCount(vidRow.video_id, '3')
+  // }
 }

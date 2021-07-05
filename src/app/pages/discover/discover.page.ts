@@ -1,4 +1,5 @@
 import { Component, OnInit } from '@angular/core';
+import { Router } from '@angular/router';
 import { ApiService } from 'src/app/services/api.service';
 import { GlobalService } from 'src/app/services/global.service';
 
@@ -12,6 +13,7 @@ export class DiscoverPage implements OnInit {
   constructor(
     public gs: GlobalService,
     public api: ApiService,
+    public router: Router,
   ) {
     this.getCetegory();
   }
@@ -21,16 +23,41 @@ export class DiscoverPage implements OnInit {
 
   getCetegory() {
     this.api.post('getCategoryList', '').then((res) => {
-      console.log("res>>>>", res);
       if (res['ResponseCode'] == 1) {
         this.allCategoryList = res['ResultData'];
-        console.log("this.allCategoryList>>>>", this.allCategoryList);
       } else {
         this.gs.messageToast('Something went wrong');
       }
     }, err => {
       this.gs.messageToast('Something went wrong');
     })
+  }
+  getVideoListByCategory(category_id) {
+    let body = {
+      category_id: category_id,
+      language_id: '',
+      start: 0,
+    }
+    this.api.post('getVideoListByCategory', body).then((res) => {
+      if (res['ResponseCode'] == 1) {
+        this.goVideoSlides(res['ResultData'], 0)
+      } else {
+        this.gs.messageToast('Something went wrong');
+      }
+    }, err => {
+      this.gs.messageToast('Something went wrong');
+    })
+  }
+
+  goVideoSlides(data, index) {
+    this.router.navigate(['/video-slides'], {
+      queryParams: {
+        item: JSON.stringify({
+          videoData: data,
+          index: index,
+        })
+      }
+    });
   }
 
 }

@@ -21,8 +21,8 @@
 <ion-content color="primary">
   <ion-grid fixed *ngIf="gs.homeVideos">
     <ion-row>
-      <ion-col size="6" *ngFor="let item of gs.homeVideos">
-        <ion-card (click)="goVideoSlides()" class="ion-no-margin img_card">
+      <ion-col size="6" *ngFor="let item of gs.homeVideos; let inx = index">
+        <ion-card (click)="goVideoSlides(gs.homeVideos, inx)" class="ion-no-margin img_card">
           <ion-img [src]="item.video_thumb" alt="Image"></ion-img>
           <div class="img_ovarlay">
             <p>

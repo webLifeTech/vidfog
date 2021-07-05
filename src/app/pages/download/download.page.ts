@@ -23,7 +23,7 @@ export class DownloadPage implements OnInit {
 
   ionViewWillEnter() {
     this.myImages = [];
-    this.readImageFromFolder(this.file.externalRootDirectory, '4k Video Status');
+    // this.readImageFromFolder(this.file.externalRootDirectory, '4k Video Status');
   }
 
   goVideoSlides() {
@@ -31,24 +31,23 @@ export class DownloadPage implements OnInit {
     // this.router.navigate(['/video-slides'], { queryParams: { item: JSON.stringify(item) } });
   }
 
-  readImageFromFolder(path, dirName) {
-    this.file.listDir(path, dirName).then((entries) => {
-      for (let i of entries) {
-        if (
-          i['nativeURL'].split('.').pop() != 'mp4' &&
-          i['nativeURL'].split('.').pop() != 'mp3' &&
-          i['nativeURL'].split('.').pop() != 'webm'
-        ) {
-          let image = (window as any).Ionic.WebView.convertFileSrc(i['nativeURL']);
-          this.myImages.push({ image: image, original: i['nativeURL'] });
-        }
-      }
-      this.spinner = false;
-    })
-      .catch((e) => {
-        console.log('While reading pdf getting errors' + JSON.stringify(e));
-        this.spinner = false;
-      });
-  }
+  // readImageFromFolder(path, dirName) {
+  //   this.file.listDir(path, dirName).then((entries) => {
+  //     for (let i of entries) {
+  //       if (
+  //         i['nativeURL'].split('.').pop() != 'mp4' &&
+  //         i['nativeURL'].split('.').pop() != 'webm'
+  //       ) {
+  //         let image = (window as any).Ionic.WebView.convertFileSrc(i['nativeURL']);
+  //         this.myImages.push({ image: image, original: i['nativeURL'] });
+  //       }
+  //     }
+  //     this.spinner = false;
+  //   })
+  //     .catch((e) => {
+  //       console.log('While reading pdf getting errors' + JSON.stringify(e));
+  //       this.spinner = false;
+  //     });
+  // }
 
 }

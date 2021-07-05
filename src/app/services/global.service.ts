@@ -14,6 +14,9 @@ export class GlobalService {
   userData: any = {};
   loading: any;
   appLogo: any = 'https://play-lh.googleusercontent.com/mt0d5BGWZX7nAJJq39X79a3FN0Jap1ydSo2b13Hj6EbqD3MkrYSzBmxoTXS2bMne6Q=s180-rw';
+  myFavVideos: any = [];
+  isFavVideo: boolean = false;
+  selectedLang: any;
 
   constructor(
     public market: Market,
@@ -23,6 +26,10 @@ export class GlobalService {
     public api: ApiService,
     public tc: ToastController
   ) {
+    this.myFavVideos = JSON.parse(window.localStorage.getItem("4kvideostatus")) || [];
+    this.selectedLang = JSON.parse(window.localStorage.getItem("selectedLanguages")) || [];
+    console.log(this.selectedLang);
+
   }
 
   getLanguageList() {
@@ -68,6 +75,51 @@ export class GlobalService {
     })
   }
 
+  increateCount(video_id, type) {
+    let body = {
+      video_id: video_id,
+      type: type
+    }
+    this.api.post('increateCount', body).then((res) => {
+      if (res['ResponseCode'] == 1) {
+      } else {
+        this.messageToast('Something went wrong');
+      }
+    }, err => {
+      this.messageToast('Something went wrong');
+    })
+  }
+
+  setFavourites(vidRow) {
+    this.myFavVideos.push(vidRow);
+    window.localStorage.setItem("4kvideostatus", JSON.stringify(this.myFavVideos));
+    this.checkFavVideo(vidRow.video_id);
+    vidRow.video_favourite = Number(vidRow.video_favourite) + 1;
+    this.increateCount(vidRow.video_id, '3');
+  }
+
+  checkFavVideo(video_id) {
+    this.isFavVideo = false;
+    for (let i in this.myFavVideos) {
+      if (this.myFavVideos[i].video_id == video_id) {
+        this.isFavVideo = true;
+      }
+    }
+  }
+
+  removeFavVideo(video_id) {
+    for (let i in this.myFavVideos) {
+      if (this.myFavVideos[i].video_id == video_id) {
+        this.myFavVideos.splice(i, 1);
+        window.localStorage.setItem("4kvideostatus", JSON.stringify(this.myFavVideos));
+        setTimeout(() => {
+          this.checkFavVideo(video_id);
+        }, 100);
+      }
+    }
+    // this.isFavVideo = false;
+  }
+
   async languagePopup() {
     const alert = await this.alertController.create({
       cssClass: 'my-custom-class',
@@ -86,6 +138,7 @@ export class GlobalService {
           handler: (res) => {
             console.log(String(res));
             if (res.length) {
+              window.localStorage.setItem("selectedLanguages", JSON.stringify(res));
               this.getHomeVideos({
                 language_id: String(res),
                 start: 0
