@@ -22,7 +22,11 @@ export class DiscoverPage implements OnInit {
   }
 
   getCetegory() {
-    this.api.post('getCategoryList', '').then((res) => {
+    let body = {
+      language_id: String(this.gs.selectedLang),
+      start: 0,
+    }
+    this.api.post('getCategoryList', body).then((res) => {
       if (res['ResponseCode'] == 1) {
         this.allCategoryList = res['ResultData'];
       } else {
@@ -35,7 +39,7 @@ export class DiscoverPage implements OnInit {
   getVideoListByCategory(category_id) {
     let body = {
       category_id: category_id,
-      language_id: '',
+      language_id: String(this.gs.selectedLang),
       start: 0,
     }
     this.api.post('getVideoListByCategory', body).then((res) => {

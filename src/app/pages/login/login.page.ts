@@ -76,9 +76,10 @@ export class LoginPage implements OnInit {
   }
 
   fileChangeEvent(event) {
-    console.log("event>>>", event[0]);
-    this.currentFileUpload = event[0]
-    this.encodeImageFileAsURL(event[0])
+    // console.log("event>>>", event[0]);
+    let files = event['target']['files']['event'][0];
+    this.currentFileUpload = files
+    this.encodeImageFileAsURL(files)
   }
 
   encodeImageFileAsURL(element) {

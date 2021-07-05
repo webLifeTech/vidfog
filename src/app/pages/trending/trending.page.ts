@@ -23,7 +23,7 @@ export class TrendingPage implements OnInit {
 
   getTrendingVideos() {
     let body = {
-      language_id: "",
+      language_id: String(this.gs.selectedLang),
       start: this.allTrendingVideos.length,
     }
     this.api.post('getTrendingVideos', body).then((res) => {
@@ -41,7 +41,7 @@ export class TrendingPage implements OnInit {
 
   loadData(event) {
     let body = {
-      language_id: "",
+      language_id: String(this.gs.selectedLang),
       start: this.allTrendingVideos.length,
     }
     this.api.post('getTrendingVideos', body).then((res) => {

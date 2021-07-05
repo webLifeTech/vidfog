@@ -20,7 +20,7 @@
       </ion-fab-button>
     </ion-fab>
   </div>
-  <input type="file" #reffInput hidden (change)="fileChangeEvent($event.target.files)">
+  <input type="file" #reffInput hidden (change)="fileChangeEvent($event)">
   <form [formGroup]="loginForm" (ngSubmit)="loginUser()">
     <div class="ion-padding">
       <ion-item color="primary" class="costom_item">

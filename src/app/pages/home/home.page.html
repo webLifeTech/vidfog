@@ -33,6 +33,15 @@
       </ion-col>
     </ion-row>
   </ion-grid>
+  <ion-row *ngIf="!gs.homeVideos.length">
+    <ion-col size="12">
+      <div class="ion-text-center" style="margin-top: 60px;">
+        <ion-text color="light">
+          No Videos!
+        </ion-text>
+      </div>
+    </ion-col>
+  </ion-row>
   <ion-infinite-scroll threshold="100px" (ionInfinite)="loadData($event)">
     <ion-infinite-scroll-content loadingSpinner="crescent" loadingText="Loading more data...">
     </ion-infinite-scroll-content>

@@ -21,11 +21,11 @@ export class ApiService {
   }
 
   post(url: string, data: any) {
-    let headers = new HttpHeaders()
-    headers.set('content-type', 'application/json')
-    headers.set('Access-Control-Allow-Origin', '*')
+    // let headers = new HttpHeaders()
+    // headers.set('content-type', 'application/json')
+    // headers.set('Access-Control-Allow-Origin', '*')
     return new Promise((resolve, reject) => {
-      this.http.post(this.serverURl + url, data, { headers: headers }).subscribe((result) => {
+      this.http.post(this.serverURl + url, data).subscribe((result) => {
         resolve(result);
       }, (error) => {
         reject(error);

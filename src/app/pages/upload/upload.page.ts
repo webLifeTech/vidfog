@@ -32,6 +32,10 @@ export class UploadPage implements OnInit {
   }
 
   getCetegory() {
+    let body = {
+      language_id: String(this.gs.selectedLang),
+      start: 0,
+    }
     this.api.post('getCategoryList', '').then((res) => {
       console.log("res>>>>", res);
       if (res['ResponseCode'] == 1) {
@@ -79,10 +83,11 @@ export class UploadPage implements OnInit {
   }
 
   fileChangeEvent(event) {
-    console.log("event>>>", event[0]);
-    if (event[0].size < 5000001) {
-      this.currentFileUpload = event[0]
-      this.encodeImageFileAsURL(event[0])
+    let files = event['target']['files']['event'][0];
+    console.log("event>>>", files);
+    if (files.size < 5000001) {
+      this.currentFileUpload = files;
+      this.encodeImageFileAsURL(files)
     } else {
       this.gs.messageToast('Please upload video size maximum 5MB')
     }

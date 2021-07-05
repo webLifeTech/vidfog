@@ -8,6 +8,7 @@ import { UniqueDeviceID } from '@ionic-native/unique-device-id/ngx';
 import { ApiService } from './services/api.service';
 import { AppVersion } from '@ionic-native/app-version/ngx';
 import { Router } from '@angular/router';
+import { HTTP } from '@ionic-native/http/ngx';
 
 @Component({
   selector: 'app-root',
@@ -29,6 +30,7 @@ export class AppComponent {
     public gs: GlobalService,
     public appVersion: AppVersion,
     public router: Router,
+    private http: HTTP,
     public api: ApiService
   ) {
     this.initializeApp();
@@ -53,8 +55,19 @@ export class AppComponent {
       }
       this.listenConnection();
       this.createUserProfile();
-      this.getAppDetail();
-      this.gs.getLanguageList();
+      // this.getAppDetail();
+      // this.gs.getLanguageList();
+      this.http.get('http://4kfullscreenvideostatus.com/appv1/videoapi/getLanguageList', '', '')
+        .then(data => {
+          console.log("datadatadatadata" + JSON.stringify(data));
+        })
+        .catch(error => {
+
+          console.log("error.status>>>" + JSON.stringify(error.status));
+          console.log("error.error>>>" + JSON.stringify(error.error)); // error message as string
+          console.log("error.headers>>>" + JSON.stringify(error.headers));
+
+        });
       this.file.createDir(this.file.externalRootDirectory, '4k Video Status', true)
         .then((result) => { })
         .catch((err) => { });
@@ -109,7 +122,7 @@ export class AppComponent {
         console.log(JSON.stringify("error>>>>>>>>" + error));
         this.gs.messageToast('Something went wrong');
       })
-    }).catch((error: any) => console.log(error));
+    }).catch((error: any) => console.log("erroruniqueDeviceID>>>>" + JSON.stringify(error)));
   }
 
   getAppDetail() {

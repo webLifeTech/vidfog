@@ -26,13 +26,13 @@ export class ProfilePage implements OnInit {
       this.getMyVideos();
     }
     console.log("gs.myFavVideos>>>", gs.myFavVideos);
+    console.log("this.userData", this.gs.userData);
   }
 
   ngOnInit() {
   }
 
   getMyVideos() {
-    console.log("this.userData", this.gs.userData);
     let body = {
       user_id: this.gs.userData.user_id,
       start: this.dataStart

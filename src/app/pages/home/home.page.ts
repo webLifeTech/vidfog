@@ -30,10 +30,8 @@ export class HomePage implements OnInit {
   }
 
   loadData(event) {
-    console.log("event", event);
-
     let body = {
-      language_id: "",
+      language_id: String(this.gs.selectedLang),
       start: this.gs.homeVideos.length,
     }
     console.log("event????", this.gs.homeVideos.length);

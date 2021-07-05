@@ -16,7 +16,7 @@ export class GlobalService {
   appLogo: any = 'https://play-lh.googleusercontent.com/mt0d5BGWZX7nAJJq39X79a3FN0Jap1ydSo2b13Hj6EbqD3MkrYSzBmxoTXS2bMne6Q=s180-rw';
   myFavVideos: any = [];
   isFavVideo: boolean = false;
-  selectedLang: any;
+  selectedLang: any = [];
 
   constructor(
     public market: Market,
@@ -28,7 +28,7 @@ export class GlobalService {
   ) {
     this.myFavVideos = JSON.parse(window.localStorage.getItem("4kvideostatus")) || [];
     this.selectedLang = JSON.parse(window.localStorage.getItem("selectedLanguages")) || [];
-    console.log(this.selectedLang);
+    console.log("selectedLang", this.selectedLang);
 
   }
 
@@ -37,29 +37,47 @@ export class GlobalService {
       if (res['ResponseCode'] == 1) {
         this.allVideoLanguage = res['ResultData'];
         console.log(this.allVideoLanguage);
-        let tempLang = [];
+        // let tempLang = [];
         const setCatLang = () => {
           for (let i in this.allVideoLanguage) {
             this.allVideoLangTemp.push({
               type: 'checkbox',
               label: this.allVideoLanguage[i].language_name,
               value: this.allVideoLanguage[i].language_id,
-              checked: true
+              checked: this.isLangCheck(this.allVideoLanguage[i].language_id)
             })
-            tempLang.push(this.allVideoLanguage[i].language_id)
+            if (!this.selectedLang.length) {
+              this.selectedLang.push(this.allVideoLanguage[i].language_id)
+            }
           }
         }
         await setCatLang();
+        console.log("this.allVideoLangTemp>>>", this.allVideoLangTemp);
+
         this.getHomeVideos({
-          language_id: String(tempLang),
+          language_id: String(this.selectedLang),
           start: 0,
         });
       } else {
         this.messageToast('Something went wrong');
       }
     }, err => {
+      console.log("errgetLanguageList>>>>>>>>" + JSON.stringify(err));
+
       this.messageToast('Something went wrong');
     })
+  }
+
+  isLangCheck(language_id) {
+    if (this.selectedLang.length) {
+      for (let i in this.selectedLang) {
+        if (this.selectedLang[i] == language_id) {
+          return true
+        }
+      }
+    } else {
+      return true
+    }
   }
 
   getHomeVideos(body) {
@@ -121,6 +139,17 @@ export class GlobalService {
   }
 
   async languagePopup() {
+    const setCatLang = () => {
+      for (let i in this.allVideoLangTemp) {
+        this.allVideoLangTemp[i] = {
+          type: 'checkbox',
+          label: this.allVideoLanguage[i].language_name,
+          value: this.allVideoLanguage[i].language_id,
+          checked: this.isLangCheck(this.allVideoLanguage[i].language_id)
+        }
+      }
+    }
+    await setCatLang();
     const alert = await this.alertController.create({
       cssClass: 'my-custom-class',
       header: 'Languages',
@@ -136,7 +165,8 @@ export class GlobalService {
         }, {
           text: 'Ok',
           handler: (res) => {
-            console.log(String(res));
+            this.selectedLang = res;
+            console.log(res);
             if (res.length) {
               window.localStorage.setItem("selectedLanguages", JSON.stringify(res));
               this.getHomeVideos({

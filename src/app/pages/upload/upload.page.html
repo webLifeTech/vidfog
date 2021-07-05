@@ -28,8 +28,7 @@
     </ion-text>
   </div>
   <form [formGroup]="uploadVidForm" (ngSubmit)="videoUplead()">
-    <input type="file" #reffInput hidden accept="video/mp4,video/x-m4v,video/*"
-      (change)="fileChangeEvent($event.target.files)">
+    <input type="file" #reffInput hidden accept="video/mp4,video/x-m4v,video/*" (change)="fileChangeEvent($event)">
     <ion-grid fixed>
       <ion-row>
         <ion-col *ngIf="gs.allVideoLanguage.length" size="12">
