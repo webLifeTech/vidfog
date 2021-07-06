@@ -56,8 +56,8 @@ export class UploadPage implements OnInit {
         let formData = new FormData();
         formData.append('user_id', this.gs.userData.user_id);
         formData.append('video_file', this.currentFileUpload);
-        formData.append('language_id', this.uploadVidForm.value.language_id);
-        formData.append('category_id', this.uploadVidForm.value.category_id);
+        formData.append('language_id', String(this.uploadVidForm.value.language_id));
+        formData.append('category_id', String(this.uploadVidForm.value.category_id));
         console.log(this.uploadVidForm.value);
         this.api.post('uploadVideo', formData).then(async (res) => {
           console.log("uploadVideo>>>>", res);
@@ -83,7 +83,9 @@ export class UploadPage implements OnInit {
   }
 
   fileChangeEvent(event) {
-    let files = event['target']['files']['event'][0];
+    console.log(event['target']['files']);
+
+    let files = event['target']['files'][0];
     console.log("event>>>", files);
     if (files.size < 5000001) {
       this.currentFileUpload = files;

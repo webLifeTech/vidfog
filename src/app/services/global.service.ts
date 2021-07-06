@@ -15,6 +15,7 @@ export class GlobalService {
   loading: any;
   appLogo: any = 'https://play-lh.googleusercontent.com/mt0d5BGWZX7nAJJq39X79a3FN0Jap1ydSo2b13Hj6EbqD3MkrYSzBmxoTXS2bMne6Q=s180-rw';
   myFavVideos: any = [];
+  myFavQuotes: any = [];
   isFavVideo: boolean = false;
   selectedLang: any = [];
 
@@ -27,6 +28,7 @@ export class GlobalService {
     public tc: ToastController
   ) {
     this.myFavVideos = JSON.parse(window.localStorage.getItem("4kvideostatus")) || [];
+    this.myFavQuotes = JSON.parse(window.localStorage.getItem("4kvideostatusQuotes")) || [];
     this.selectedLang = JSON.parse(window.localStorage.getItem("selectedLanguages")) || [];
     console.log("selectedLang", this.selectedLang);
 
@@ -108,6 +110,7 @@ export class GlobalService {
     })
   }
 
+  // Video Fav
   setFavourites(vidRow) {
     this.myFavVideos.push(vidRow);
     window.localStorage.setItem("4kvideostatus", JSON.stringify(this.myFavVideos));
@@ -135,8 +138,42 @@ export class GlobalService {
         }, 100);
       }
     }
-    // this.isFavVideo = false;
   }
+  // Quotes Fav END
+
+
+  // Quotes Fav
+  setFavouritesQuotes(quotRow) {
+    this.myFavQuotes.push(quotRow);
+    window.localStorage.setItem("4kvideostatusQuotes", JSON.stringify(this.myFavQuotes));
+    this.checkFavQuotes(quotRow.quotes_id);
+    quotRow.quotes_favourite = Number(quotRow.quotes_favourite) + 1;
+    this.increateCount(quotRow.quotes_id, '3');
+  }
+
+  checkFavQuotes(quotes_id) {
+    this.isFavVideo = false;
+    for (let i in this.myFavQuotes) {
+      if (this.myFavQuotes[i].quotes_id == quotes_id) {
+        this.isFavVideo = true;
+      }
+    }
+  }
+
+  removeFavQuotes(quotRow) {
+    console.log("quotRow>>>", quotRow);
+    for (let i in this.myFavQuotes) {
+      if (this.myFavQuotes[i].quotes_id == quotRow.quotes_id) {
+        this.myFavQuotes.splice(i, 1);
+        quotRow.quotes_favourite = Number(quotRow.quotes_favourite) - 1;
+        window.localStorage.setItem("4kvideostatusQuotes", JSON.stringify(this.myFavQuotes));
+        setTimeout(() => {
+          this.checkFavQuotes(quotRow.quotes_id);
+        }, 100);
+      }
+    }
+  }
+  // Quotes Fav END
 
   async languagePopup() {
     const setCatLang = () => {

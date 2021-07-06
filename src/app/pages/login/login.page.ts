@@ -1,6 +1,7 @@
 import { Component, OnInit } from '@angular/core';
 import { FormBuilder, FormGroup, Validators } from '@angular/forms';
 import { UniqueDeviceID } from '@ionic-native/unique-device-id/ngx';
+import { NavController } from '@ionic/angular';
 import { ApiService } from 'src/app/services/api.service';
 import { GlobalService } from 'src/app/services/global.service';
 
@@ -19,6 +20,7 @@ export class LoginPage implements OnInit {
     private fb: FormBuilder,
     public gs: GlobalService,
     public api: ApiService,
+    private navCtrl: NavController,
     private uniqueDeviceID: UniqueDeviceID
   ) {
     this.loginForm = this.fb.group({
@@ -59,6 +61,7 @@ export class LoginPage implements OnInit {
       this.api.post('updateUserProfile', formData).then((res) => {
         console.log("updateUserProfile>>>>", res);
         if (res['ResponseCode'] == 1) {
+          this.navCtrl.pop();
           this.gs.userData = res['ResultData'];
           this.gs.messageToast(res['ResponseMsg']);
           this.gs.dissmisLoding();
@@ -77,7 +80,7 @@ export class LoginPage implements OnInit {
 
   fileChangeEvent(event) {
     // console.log("event>>>", event[0]);
-    let files = event['target']['files']['event'][0];
+    let files = event['target']['files'][0];
     this.currentFileUpload = files
     this.encodeImageFileAsURL(files)
   }

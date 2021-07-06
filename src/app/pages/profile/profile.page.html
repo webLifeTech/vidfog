@@ -116,8 +116,8 @@
                     </ion-fab>
                     <span style="margin-left: auto;">
                       <ion-fab>
-                        <ion-fab-button (click)="unFavConfirm(vidRow.video_id)" fill="outline" color="primary"
-                          size="small">
+                        <ion-fab-button (click)="unFavConfirm(vidRow.video_id);$event.stopPropagation()" fill="outline"
+                          color="primary" size="small">
                           <ion-icon name="heart"></ion-icon>
                         </ion-fab-button>
                       </ion-fab>

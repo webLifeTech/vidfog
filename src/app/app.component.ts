@@ -68,9 +68,13 @@ export class AppComponent {
       //     console.log("error.headers>>>" + JSON.stringify(error.headers));
 
       //   });
-      // this.file.createDir(this.file.externalRootDirectory, '4k Video Status', true)
-      //   .then((result) => { })
-      //   .catch((err) => { });
+      this.file.createDir(this.file.externalRootDirectory, '4k Video Status', true)
+        .then((result) => {
+          this.file.createDir(this.file.externalRootDirectory, '4k Video Status/Quotes', true).then((result) => {
+
+          }).catch((err) => { });
+        })
+        .catch((err) => { });
     })
   }
 

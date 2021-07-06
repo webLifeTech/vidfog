@@ -4,14 +4,27 @@
       <ion-back-button></ion-back-button>
     </ion-buttons>
     <ion-title>Quotes</ion-title>
+    <ion-buttons slot="end">
+      <ion-button (click)="gs.languagePopup()">
+        <ion-icon slot="icon-only" color="secondary" name="globe-outline"></ion-icon>
+      </ion-button>
+      <ion-button routerLink="/quotes-faverite">
+        <ion-icon slot="icon-only" color="danger" name="heart"></ion-icon>
+      </ion-button>
+    </ion-buttons>
   </ion-toolbar>
   <ion-toolbar color="primary" *ngIf="allQuotCatList.length">
-    <ion-segment (ionChange)="segmentChanged($event)" color="light" scrollable value="heart">
+    <ion-segment (ionChange)="segmentChanged($event)" color="light" scrollable aria-selected="true"
+      value="allQuotCatList[0].category_id">
       <ng-container *ngFor="let item of allQuotCatList">
         <ion-segment-button color="light" [value]="item.category_id">
           <!-- <ion-icon color="light" name="hardware-chip-outline"></ion-icon> -->
-          <img [src]="item.category_thumb" alt="Image">
-          <ion-label color="light">{{item.category_name}}</ion-label>
+          <!-- <img [src]="item.category_thumb" alt="Image"> -->
+          <span
+            style="background: red;height: 50px;width: 50px;display: flex;align-items: center;justify-content: center;font-size: 27px;border-radius: 60px;">
+            <ion-icon src="assets/Attitude.svg"></ion-icon>
+          </span>
+          <ion-label color="light" style="font-size: 10px;margin-top: 2px;">{{item.category_name}}</ion-label>
         </ion-segment-button>
       </ng-container>
     </ion-segment>
@@ -21,12 +34,9 @@
 <ion-content color="primary">
   <ion-row>
     <ion-col size="6" *ngFor="let item of allQuotesList; let inx = index">
-      <ion-card class="ion-no-margin img_card">
+      <ion-card class="ion-no-margin img_card" (click)="goQuotesSlides(allQuotesList,inx)" style="height: 243px;">
         <ion-img [src]="item.quotes_thumb" alt="Image"></ion-img>
-        <div class="img_ovarlay">
-          <p>
-            <b>{{item.language_name}}</b> - {{item.category_name}}
-          </p>
+        <div class="img_ovarlay" style="background: linear-gradient(transparent, rgb(0 0 0 / 22%));">
         </div>
       </ion-card>
     </ion-col>

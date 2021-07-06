@@ -49,7 +49,15 @@ const routes: Routes = [
   {
     path: 'login',
     loadChildren: () => import('./pages/login/login.module').then( m => m.LoginPageModule)
+  },  {
+    path: 'quotes-slider',
+    loadChildren: () => import('./pages/quotes-slider/quotes-slider.module').then( m => m.QuotesSliderPageModule)
+  },
+  {
+    path: 'quotes-faverite',
+    loadChildren: () => import('./pages/quotes-faverite/quotes-faverite.module').then( m => m.QuotesFaveritePageModule)
   }
+
 
 ];
 @NgModule({
