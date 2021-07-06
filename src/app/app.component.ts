@@ -55,22 +55,22 @@ export class AppComponent {
       }
       this.listenConnection();
       this.createUserProfile();
-      // this.getAppDetail();
-      // this.gs.getLanguageList();
-      this.http.get('http://4kfullscreenvideostatus.com/appv1/videoapi/getLanguageList', '', '')
-        .then(data => {
-          console.log("datadatadatadata" + JSON.stringify(data));
-        })
-        .catch(error => {
+      this.getAppDetail();
+      this.gs.getLanguageList();
+      // this.http.get('http://4kfullscreenvideostatus.com/appv1/videoapi/getLanguageList', '', '')
+      //   .then(data => {
+      //     console.log("datadatadatadata" + JSON.stringify(data));
+      //   })
+      //   .catch(error => {
 
-          console.log("error.status>>>" + JSON.stringify(error.status));
-          console.log("error.error>>>" + JSON.stringify(error.error)); // error message as string
-          console.log("error.headers>>>" + JSON.stringify(error.headers));
+      //     console.log("error.status>>>" + JSON.stringify(error.status));
+      //     console.log("error.error>>>" + JSON.stringify(error.error)); // error message as string
+      //     console.log("error.headers>>>" + JSON.stringify(error.headers));
 
-        });
-      this.file.createDir(this.file.externalRootDirectory, '4k Video Status', true)
-        .then((result) => { })
-        .catch((err) => { });
+      //   });
+      // this.file.createDir(this.file.externalRootDirectory, '4k Video Status', true)
+      //   .then((result) => { })
+      //   .catch((err) => { });
     })
   }
 
