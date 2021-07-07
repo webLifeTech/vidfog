@@ -9,6 +9,7 @@ import { ApiService } from './services/api.service';
 import { AppVersion } from '@ionic-native/app-version/ngx';
 import { Router } from '@angular/router';
 import { HTTP } from '@ionic-native/http/ngx';
+import { FCM } from '@ionic-native/fcm/ngx';
 
 @Component({
   selector: 'app-root',
@@ -31,6 +32,7 @@ export class AppComponent {
     public appVersion: AppVersion,
     public router: Router,
     private http: HTTP,
+    private fcm: FCM,
     public api: ApiService
   ) {
     this.initializeApp();
@@ -53,6 +55,7 @@ export class AppComponent {
           this.internetNotConnect();
         }
       }
+      this.initialFCMNotification();
       this.listenConnection();
       this.createUserProfile();
       this.getAppDetail();
@@ -76,6 +79,26 @@ export class AppComponent {
         })
         .catch((err) => { });
     })
+  }
+
+  initialFCMNotification() {
+    try {
+      this.fcm.getToken().then((token) => {
+        console.log("token>>>>>>>>>>>" + JSON.stringify(token))
+      }, (err) => {
+        console.log("errreeeee" + JSON.stringify(err));
+      });
+
+      // this.fcm.onNotification().subscribe((data) => {
+      //   if (data.wasTapped) {
+      //     console.log('Received in background');
+      //   } else {
+      //     console.log('Received in foreground');
+      //   }
+      // });
+    } catch (erer) {
+      console.log('FCM>>>>>>>>>>', erer);
+    }
   }
 
   async listenConnection() {

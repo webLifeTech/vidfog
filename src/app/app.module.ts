@@ -17,6 +17,7 @@ import { FileTransfer } from '@ionic-native/file-transfer/ngx';
 import { HttpClientModule } from '@angular/common/http';
 import { ReactiveFormsModule, FormsModule } from '@angular/forms';
 import { HTTP } from '@ionic-native/http/ngx';
+import { FCM } from 'cordova-plugin-fcm-with-dependecy-updated/ionic/ngx';
 
 @NgModule({
   declarations: [AppComponent],
@@ -39,6 +40,7 @@ import { HTTP } from '@ionic-native/http/ngx';
     File,
     FileTransfer,
     HTTP,
+    FCM,
     { provide: RouteReuseStrategy, useClass: IonicRouteStrategy }],
   bootstrap: [AppComponent],
 })
